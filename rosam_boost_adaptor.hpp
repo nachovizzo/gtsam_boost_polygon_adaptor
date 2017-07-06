@@ -8,6 +8,7 @@
 #ifndef ROSAM_BOOST_ADAPTOR_HPP_
 #define ROSAM_BOOST_ADAPTOR_HPP_
 
+
 /**
  * @brief This adaptor is intended to teach
  * the boost.polygon library how to deal with
@@ -189,6 +190,51 @@ namespace boost
  * write our own specialization.
  */
 
+#include <iostream>
+/**
+ *  DELETE ME PLEASE!!
+ */
+namespace boost
+{
+  namespace polygon
+  {
+      template <class T>
+  std::ostream& operator << (std::ostream& o, const point_data<T>& r)
+  {
+    return o << r.get(HORIZONTAL) << ";" << r.get(VERTICAL);
+  }
+    template<typename T>
+      std::ostream&
+      operator<< (std::ostream& o, const gtl::polygon_data<T>& poly)
+      {
+        o << "Polygon = [ " << std::endl;
+        for (typename polygon_data<T>::iterator_type itr = poly.begin ();
+            itr != poly.end (); ++itr)
+          {
+            if (itr != poly.begin ())
+              o << ";" << std::endl;
+            o << (*itr).get (HORIZONTAL) << "," << (*itr).get (VERTICAL);
+          }
+        o << " ]; ";
+        return o;
+      }
+    template<typename T>
+      std::ostream&
+      operator << (std::ostream& o, const polygon_set_data<T>& r)
+      {
+        o << "Polygon Set Data { " << std::endl;
+        for (typename polygon_set_data<T>::iterator_type itr = r.begin ();
+            itr != r.end (); ++itr)
+          {
+            o << "<" << (*itr).first.first << ", " << (*itr).first.second
+                << ">: " << (*itr).second << std::endl;
+          }
+        o << "} ";
+        return o;
+      }
+  }
+}
+
 //OK, finally we get to declare our own polygon set type
 typedef std::deque<rosam_polygon_t> rosam_polygon_set_t;
 
@@ -249,13 +295,22 @@ namespace boost
             polygon_set_data<double> psd;
             psd.insert(input_begin, input_end);
 
+            std::cout << psd << std::endl;
+
             // now we have our data copied into
             // the psd polygon set. We need to
             // copy that data into the user defined
             // polygon.
-
-//            psd.get(polygon_set);
-        }
+            /// \todo : Find the way to do this in a
+            /// propper manner. We would like to write:
+            /// -> psd.get(polygon_set);
+            typedef polygon_set_data<double>::iterator_type iterator_type;
+            for (iterator_type itr = psd.begin(); itr != psd.end(); ++itr)
+            {
+              std::cout << "Fill your rosam_polygon_t here..."
+                        << std::endl;
+            }
+      }
       };
   }
 }

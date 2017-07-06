@@ -331,6 +331,3 @@ main (int argc, char **argv)
   return 0;
 }
 
-//Now you know how to map your own data type to polygon set concept
-//Now you also know how to make your application code that operates on geometry
-//data type agnostic from point through polygon set

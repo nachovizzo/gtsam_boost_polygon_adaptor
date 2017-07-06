@@ -7,44 +7,44 @@
 
 #include "rosam_boost_adaptor.hpp"
 #include <iostream>
-/**
- *  DECIME ALGO
- */
-namespace boost
-{
-  namespace polygon
-  {
-    template<typename T>
-      std::ostream&
-      operator<< (std::ostream& o, const gtl::polygon_data<T>& poly)
-      {
-	o << "Polygon = [ " << std::endl;
-	for (typename polygon_data<T>::iterator_type itr = poly.begin ();
-	    itr != poly.end (); ++itr)
-	  {
-	    if (itr != poly.begin ())
-	      o << ";" << std::endl;
-	    o << (*itr).get (HORIZONTAL) << "," << (*itr).get (VERTICAL);
-	  }
-	o << " ]; ";
-	return o;
-      }
-    template<typename T>
-      std::ostream&
-      operator << (std::ostream& o, const polygon_set_data<T>& r)
-      {
-	o << "Polygon Set Data { ";
-	for (typename polygon_set_data<T>::iterator_type itr = r.begin ();
-	    itr != r.end (); ++itr)
-	  {
-	    o << "<" << (*itr).first.first << ", " << (*itr).first.second
-		<< ">:" << (*itr).second << " ";
-	  }
-	o << "} ";
-	return o;
-      }
-  }
-}
+// /**
+//  *  DECIME ALGO
+//  */
+// namespace boost
+// {
+//   namespace polygon
+//   {
+//     template<typename T>
+//       std::ostream&
+//       operator<< (std::ostream& o, const gtl::polygon_data<T>& poly)
+//       {
+// 	o << "Polygon = [ " << std::endl;
+// 	for (typename polygon_data<T>::iterator_type itr = poly.begin ();
+// 	    itr != poly.end (); ++itr)
+// 	  {
+// 	    if (itr != poly.begin ())
+// 	      o << ";" << std::endl;
+// 	    o << (*itr).get (HORIZONTAL) << "," << (*itr).get (VERTICAL);
+// 	  }
+// 	o << " ]; ";
+// 	return o;
+//       }
+//     template<typename T>
+//       std::ostream&
+//       operator << (std::ostream& o, const polygon_set_data<T>& r)
+//       {
+// 	o << "Polygon Set Data { ";
+// 	for (typename polygon_set_data<T>::iterator_type itr = r.begin ();
+// 	    itr != r.end (); ++itr)
+// 	  {
+// 	    o << "<" << (*itr).first.first << ", " << (*itr).first.second
+// 		<< ">:" << (*itr).second << " ";
+// 	  }
+// 	o << "} ";
+// 	return o;
+//       }
+//   }
+// }
 //first lets turn our polygon usage code into a generic
 //function parameterized by polygon type
 template<typename Polygon>
@@ -143,7 +143,7 @@ main (int argc, char **argv)
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
   //There is already a mapped concpet for a std::vector of(is_polygon_concept)
-  test_polygon_set<std::vector<rosam_polygon_t> > ();
+  test_polygon_set<rosam_polygon_set_t> ();
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
 
 //  test_polygon_set<rosam_polygon_set_t> ();
