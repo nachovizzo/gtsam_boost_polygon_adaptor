@@ -6,7 +6,56 @@
  */
 
 #include "rosam_boost_adaptor.hpp"
+#include <cassert>
 #include <iostream>
+
+//lets make the body of main from point_usage.cpp
+//a generic function parameterized by point type
+template <typename Point>
+void test_point() {
+    //constructing a gtl point
+    int x = 10;
+    int y = 20;
+    //Point pt(x, y);
+    Point pt = gtl::construct<Point>(x, y);
+    assert(gtl::x(pt) == 10);
+    assert(gtl::y(pt) == 20);
+
+    //a quick primer in isotropic point access
+    typedef gtl::orientation_2d O;
+    using gtl::HORIZONTAL;
+    using gtl::VERTICAL;
+    O o = HORIZONTAL;
+    assert(gtl::x(pt) == gtl::get(pt, o));
+
+    o = o.get_perpendicular();
+    assert(o == VERTICAL);
+    assert(gtl::y(pt) == gtl::get(pt, o));
+
+    gtl::set(pt, o, 30);
+    assert(gtl::y(pt) == 30);
+
+    //using some of the library functions
+    //Point pt2(10, 30);
+    Point pt2 = gtl::construct<Point>(10, 30);
+    assert(gtl::equivalence(pt, pt2));
+
+    gtl::transformation<int> tr(gtl::axis_transformation::SWAP_XY);
+    gtl::transform(pt, tr);
+    assert(gtl::equivalence(pt, gtl::construct<Point>(30, 10)));
+
+    gtl::transformation<int> tr2 = tr.inverse();
+    assert(tr == tr2); //SWAP_XY is its own inverse transform
+
+    gtl::transform(pt, tr2);
+    assert(gtl::equivalence(pt, pt2)); //the two points are equal again
+
+    gtl::move(pt, o, 10); //move pt 10 units in y
+    assert(gtl::euclidean_distance(pt, pt2) == 10.0f);
+
+    gtl::move(pt, o.get_perpendicular(), 10); //move pt 10 units in x
+    assert(gtl::manhattan_distance(pt, pt2) == 20);
+}
 
 //first lets turn our polygon usage code into a generic
 //function parameterized by polygon type
@@ -133,6 +182,12 @@ main (int argc, char **argv)
 {
   std::cout << "Launching Rosam Adaptor test..." << std::endl<< std::endl;
 
+  //First test the Point concept
+  test_point<gtl::point_data<int> >();
+  std::cout << "[OK] - boost::polygon::point_data tested." << std::endl;
+
+  test_point<rosam_point_t>();
+  std::cout << "[OK] - User definded point_data tested." << std::endl;
   //First we test our mapped concept of polygon (a.k.a rosam_polygon_t)
 #if 0
   test_polygon<rosam_polygon_t> ();

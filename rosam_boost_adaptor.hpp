@@ -34,8 +34,9 @@
 //typedef gtsam::Pose2::Translation rosam_point_t;
 /// \todo re-define if we really want to do this in this way
 /// of we want to specify the gtsam::Point2 as the point concept.
-typedef gtsam::Pose2 rosam_point_t;/**
+typedef gtsam::Pose2 rosam_point_t;
 
+/**
  * We define the rosam_polygon_t data type
  * as a vector of gtsam::Pose2. Right now
  * is implemented in this way on the code.
