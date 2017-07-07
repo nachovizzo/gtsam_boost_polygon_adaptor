@@ -159,18 +159,12 @@ main (int argc, char **argv)
   test_polygon<rosam_polygon_t,double> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
+  //Finnaly we test the polygon_set_concept
   test_polygon_set<gtl::polygon_set_data<double>,double > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
-  test_polygon_set<rosam_polygon_set_t> ();
+  test_polygon_set<rosam_polygon_set_t, double> ();
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
-#endif
-
-  rosam_polygon_set_t rosam_polygon;
-  test_polygon_set(rosam_polygon);
-  std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
-
-//  test_polygon_set<rosam_polygon_set_t> ();
 
 }
 
