@@ -26,7 +26,7 @@ $ make install
 
 ## Build the adaptor and run the unit test
 
-$ git clone https://github.com/IgnacioVizz0/rosam_boost_polygon_adaptor.gi
+$ git clone https://github.com/IgnacioVizz0/rosam_boost_polygon_adaptor.git
 
 $ cd rosam_boost_polygon_adaptor/build
 
