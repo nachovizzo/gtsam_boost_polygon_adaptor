@@ -159,9 +159,12 @@ main (int argc, char **argv)
 
   test_point<rosam_point_t,double >();
   std::cout << "[OK] - User definded point_data tested." << std::endl;
-  //First we test our mapped concept of polygon (a.k.a rosam_polygon_t)
-#if 0
-  test_polygon<rosam_polygon_t> ();
+
+  //Then we test our mapped concept of polygon (a.k.a rosam_polygon_t)
+  test_polygon<gtl::polygon_data<double>,double > ();
+  std::cout << "[OK] - boost::polygon::polygon_data tested." << std::endl;
+
+  test_polygon<rosam_polygon_t,double> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
   test_polygon_set<gtl::polygon_set_data<double> > ();
