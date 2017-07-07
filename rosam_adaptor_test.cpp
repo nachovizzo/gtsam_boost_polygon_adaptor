@@ -99,9 +99,7 @@ void test_polygon()
 template <typename PolygonSet, typename coordinate_type>
 void test_polygon_set() {
   using namespace gtl;
-#if 1
   PolygonSet ps;
-  assert(area(ps) == 100.0f);
   ps += rectangle_data<coordinate_type>(0, 0, 10, 10);
 
   PolygonSet ps2;
@@ -111,19 +109,13 @@ void test_polygon_set() {
   PolygonSet ps4;
   ps4 += ps + ps2;
 
-  // Let's print this polygon to se what it has
-  // ps += 5;
-  std::cout << "ps  = " << std::endl << ps  << std::endl;
-  std::cout << "ps2 = " << std::endl << ps2 << std::endl;
-  std::cout << "ps3 = " << std::endl << ps3 << std::endl;
-  std::cout << "ps4 = " << std::endl << ps4 << std::endl;
+  assert(area(ps) == 100);
   assert(area(ps4) == area(ps) + area(ps2) - area(ps3));
   assert(equivalence((ps + ps2) - (ps * ps2), ps ^ ps2));
   rectangle_data<coordinate_type> rect;
   assert(extents(rect, ps ^ ps2));
   assert(area(rect) == 225);
   assert(area(rect ^ (ps ^ ps2)) == area(rect) - area(ps ^ ps2));
-#endif
 }
 
 template <typename PolygonSet, typename coordinate_type>
@@ -167,7 +159,7 @@ main (int argc, char **argv)
   test_polygon<rosam_polygon_t,double> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
-  test_polygon_set<gtl::polygon_set_data<double> > ();
+  test_polygon_set<gtl::polygon_set_data<double>,double > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
   test_polygon_set<rosam_polygon_set_t> ();
