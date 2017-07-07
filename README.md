@@ -10,9 +10,11 @@ to build our stuff if we have everything to build gtsam
 
 ## Build gtsam
 
-$ git clone https://bitbucket.org/gtborg/gtsam.git
+$ wget https://research.cc.gatech.edu/borg/sites/edu.borg/files/downloads/gtsam-3.2.1.tgz
 
-$ cd gtsam
+$ tar -xvf gtsam-3.2.1.tgz 
+
+$ cd gtsam-3.2.1/
 
 $ mkdir build
 
@@ -20,9 +22,13 @@ $ cd build
 
 $ cmake ..
 
+Now you need to patch this file(if you have an old version of boost, following this instructions : https://svn.boost.org/trac10/ticket/12126)
+
+$ vi gtsam-3.2.1/gtsam/base/FastSet.h and add #include<boost/serialization/serialization.hpp>
+
 $ make check #(optional, runs unit tests)
 
-$ make install
+$ sudo make install
 
 ## Build the adaptor and run the unit test
 
