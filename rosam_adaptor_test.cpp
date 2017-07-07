@@ -134,23 +134,56 @@ void test_polygon_set() {
 #endif
 }
 
+template <typename PolygonSet>
+void test_polygon_set(PolygonSet &ps)
+{
+  ps += gtl::rectangle_data<double>(0.0, 0.0, 10.0, 10.0);
+  std::cout << "ps  = " << std::endl
+            << ps << std::endl;
+
+  std::cout << "ps area = " << gtl::area(ps) << std::endl;
+}
+
+void test_polygon_set(rosam_polygon_set_t &ps)
+{
+  typedef typename gtl::polygon_traits<rosam_polygon_t>::point_type Point;
+
+  Point pts[] =
+      {gtl::construct<Point>(0.0, 0.0), gtl::construct<Point>(10.0, 0.0),
+       gtl::construct<Point>(10.0, 10.0), gtl::construct<Point>(0.0,
+                                                                10.0)};
+
+  rosam_polygon_t poly;
+
+  gtl::set_points(poly, pts, pts + 4);
+
+  ps += poly;
+
+  std::cout << "->ps  = " << std::endl
+            << ps << std::endl;
+
+  std::cout << "ps area = " << gtl::area(ps) << std::endl;
+}
+
 int
 main (int argc, char **argv)
 {
   std::cout << "Launching Rosam Adaptor test..." << std::endl<< std::endl;
 
   //First we test our mapped concept of polygon (a.k.a rosam_polygon_t)
-//  test_polygon<gtl::polygon_set_data> ();
-//  std::cout << "[OK] - User defined polygon tested." << std::endl;
-
+#if 0
   test_polygon<rosam_polygon_t> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
   test_polygon_set<gtl::polygon_set_data<double> > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
-  //There is already a mapped concpet for a std::vector of(is_polygon_concept)
   test_polygon_set<rosam_polygon_set_t> ();
+  std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
+#endif
+
+  rosam_polygon_set_t rosam_polygon;
+  test_polygon_set(rosam_polygon);
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
 
 //  test_polygon_set<rosam_polygon_set_t> ();
