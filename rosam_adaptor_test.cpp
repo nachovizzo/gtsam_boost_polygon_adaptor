@@ -120,28 +120,6 @@ void test_polygon_set()
   assert(area(rect ^ (ps ^ ps2)) == area(rect) - area(ps ^ ps2));
 }
 
-template <typename PolygonSet, typename coordinate_type>
-void test_polygon_set(PolygonSet &ps)
-{
-  ps += gtl::rectangle_data<coordinate_type>(0.0, 0.0, 10.0, 10.0);
-  std::cout << "ps  = " << std::endl
-            << ps << std::endl;
-
-  std::cout << "ps area = " << gtl::area(ps) << std::endl;
-}
-
-void test_polygon_set(rosam_polygon_set_t &ps)
-{
-  typedef typename gtl::polygon_traits<rosam_polygon_t>::point_type Point;
-
-  ps += gtl::rectangle_data<double>(0.0, 0.0, 10.0, 10.0);
-
-  std::cout << "->ps  = " << std::endl
-            << ps << std::endl;
-
-  std::cout << "ps area = " << gtl::area(ps) << std::endl;
-}
-
 int main(int argc, char **argv)
 {
   std::cout << "Launching Rosam Adaptor test..." << std::endl<< std::endl;
