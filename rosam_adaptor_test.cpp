@@ -96,16 +96,16 @@ void test_polygon()
 
 //once again we make our usage of the library generic
 //and parameterize it on the polygon set type
-template <typename PolygonSet>
+template <typename PolygonSet, typename coordinate_type>
 void test_polygon_set() {
   using namespace gtl;
 #if 1
   PolygonSet ps;
-  ps += rectangle_data<double>(0.0, 0.0, 10.0, 10.0);
   assert(area(ps) == 100.0f);
+  ps += rectangle_data<coordinate_type>(0, 0, 10, 10);
 
   PolygonSet ps2;
-  ps2 += rectangle_data<double>(5.0, 5.0, 15.0, 15.0);
+  ps2 += rectangle_data<coordinate_type>(5, 5, 15, 15);
   PolygonSet ps3;
   assign(ps3, ps * ps2);
   PolygonSet ps4;
@@ -119,17 +119,17 @@ void test_polygon_set() {
   std::cout << "ps4 = " << std::endl << ps4 << std::endl;
   assert(area(ps4) == area(ps) + area(ps2) - area(ps3));
   assert(equivalence((ps + ps2) - (ps * ps2), ps ^ ps2));
-  rectangle_data<double> rect;
+  rectangle_data<coordinate_type> rect;
   assert(extents(rect, ps ^ ps2));
   assert(area(rect) == 225);
   assert(area(rect ^ (ps ^ ps2)) == area(rect) - area(ps ^ ps2));
 #endif
 }
 
-template <typename PolygonSet>
+template <typename PolygonSet, typename coordinate_type>
 void test_polygon_set(PolygonSet &ps)
 {
-  ps += gtl::rectangle_data<double>(0.0, 0.0, 10.0, 10.0);
+  ps += gtl::rectangle_data<coordinate_type>(0.0, 0.0, 10.0, 10.0);
   std::cout << "ps  = " << std::endl
             << ps << std::endl;
 
