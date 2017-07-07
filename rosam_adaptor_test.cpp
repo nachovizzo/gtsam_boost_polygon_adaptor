@@ -160,16 +160,7 @@ void test_polygon_set(rosam_polygon_set_t &ps)
 {
   typedef typename gtl::polygon_traits<rosam_polygon_t>::point_type Point;
 
-  Point pts[] =
-      {gtl::construct<Point>(0.0, 0.0), gtl::construct<Point>(10.0, 0.0),
-       gtl::construct<Point>(10.0, 10.0), gtl::construct<Point>(0.0,
-                                                                10.0)};
-
-  rosam_polygon_t poly;
-
-  gtl::set_points(poly, pts, pts + 4);
-
-  ps += poly;
+  ps += gtl::rectangle_data<double>(0.0, 0.0, 10.0, 10.0);
 
   std::cout << "->ps  = " << std::endl
             << ps << std::endl;
