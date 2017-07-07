@@ -11,11 +11,11 @@
 
 //lets make the body of main from point_usage.cpp
 //a generic function parameterized by point type
-template <typename Point>
+template <typename Point, typename coordinate_type>
 void test_point() {
     //constructing a gtl point
-    int x = 10;
-    int y = 20;
+    coordinate_type x = 10;
+    coordinate_type y = 20;
     //Point pt(x, y);
     Point pt = gtl::construct<Point>(x, y);
     assert(gtl::x(pt) == 10);
@@ -40,11 +40,11 @@ void test_point() {
     Point pt2 = gtl::construct<Point>(10, 30);
     assert(gtl::equivalence(pt, pt2));
 
-    gtl::transformation<int> tr(gtl::axis_transformation::SWAP_XY);
+    gtl::transformation<coordinate_type> tr(gtl::axis_transformation::SWAP_XY);
     gtl::transform(pt, tr);
     assert(gtl::equivalence(pt, gtl::construct<Point>(30, 10)));
 
-    gtl::transformation<int> tr2 = tr.inverse();
+    gtl::transformation<coordinate_type> tr2 = tr.inverse();
     assert(tr == tr2); //SWAP_XY is its own inverse transform
 
     gtl::transform(pt, tr2);
@@ -183,10 +183,10 @@ main (int argc, char **argv)
   std::cout << "Launching Rosam Adaptor test..." << std::endl<< std::endl;
 
   //First test the Point concept
-  test_point<gtl::point_data<int> >();
+  test_point<gtl::point_data<double>,double >();
   std::cout << "[OK] - boost::polygon::point_data tested." << std::endl;
 
-  test_point<rosam_point_t>();
+  test_point<rosam_point_t,double >();
   std::cout << "[OK] - User definded point_data tested." << std::endl;
   //First we test our mapped concept of polygon (a.k.a rosam_polygon_t)
 #if 0
