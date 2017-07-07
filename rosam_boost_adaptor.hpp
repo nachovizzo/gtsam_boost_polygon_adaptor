@@ -192,13 +192,13 @@ namespace boost
 
 #include <iostream>
 /**
- *  DELETE ME PLEASE!!
+ *  ostream operator overloads to support debugging
  */
 namespace boost
 {
   namespace polygon
   {
-      template <class T>
+  template <class T>
   std::ostream& operator << (std::ostream& o, const point_data<T>& r)
   {
     return o << r.get(HORIZONTAL) << ";" << r.get(VERTICAL);
@@ -235,9 +235,19 @@ namespace boost
   }
 }
 
-//OK, finally we get to declare our own polygon set type
-typedef std::deque<rosam_polygon_t> rosam_polygon_set_t;
 
+//OK, finally we get to declare our own polygon set type
+typedef std::vector<rosam_polygon_t> rosam_polygon_set_t;
+std::ostream &
+operator<<(std::ostream &o, const rosam_polygon_set_t &r)
+{
+  o << "rosam_polygon_set_t = [ " << std::endl;
+  for (unsigned int i = 0; i < r.size(); i++)
+    for (unsigned int j = 0; j < r[i].size(); j++)
+      std::cout << r[i][j].x() << "," << r[i][j].y() << ";" << std::endl;
+  o << "]; ";
+  return o;
+}
 //deque isn't automatically a polygon set in the library
 //because it is a standard container there is a shortcut
 //for mapping it to polygon set concept, but I'll do it
