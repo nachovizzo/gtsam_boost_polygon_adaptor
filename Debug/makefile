@@ -34,10 +34,10 @@ endif
 
 -include ../makefile.defs
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 
 # All Target
-all: boost_polygon_traits
+all: clean boost_polygon_traits
 
 # Tool invocations
 boost_polygon_traits: $(OBJS) $(USER_OBJS)
