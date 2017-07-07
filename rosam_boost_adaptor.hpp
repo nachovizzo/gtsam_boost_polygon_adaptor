@@ -85,6 +85,11 @@ namespace boost
       {
         typedef double coordinate_type;
 
+        /// \todo This doesn't seems to be the best way to do this
+        ///  we are constructing a new point, using old data....
+        ///  I don't know, it doesn't sounds good. Oh! I almost
+        ///  forgot.We are using data from the same place in memmory
+        ///  to re-create it and putting it again on the same place(?)
         static inline void
         set (rosam_point_t &point, orientation_2d orient, coordinate_type value)
         {
