@@ -145,5 +145,6 @@ int main(int argc, char **argv)
   test_polygon_set<rosam_polygon_set_t, double> ();
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
 
-}
+  return 0;
 
+}
