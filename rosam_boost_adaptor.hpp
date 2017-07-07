@@ -26,17 +26,6 @@
 #include <gtsam/geometry/Pose2.h>
 
 /**
- * We define the rosam_polygon_t data type
- * as a vector of gtsam::Pose2. Right now
- * is implemented in this way on the code.
- * If some day this change, we should change
- * only this definition
- */
-#include <vector>
-typedef std::vector<gtsam::Pose2> rosam_polygon_t;
-//typedef std::vector<gtsam::Point2> rosam_polygon_t;
-
-/**
  * We use a vector of Pose2, because we are interested
  * in keep the heading information. But for the geometry
  * purposes we only need the Translation information
@@ -45,7 +34,16 @@ typedef std::vector<gtsam::Pose2> rosam_polygon_t;
 //typedef gtsam::Pose2::Translation rosam_point_t;
 /// \todo re-define if we really want to do this in this way
 /// of we want to specify the gtsam::Point2 as the point concept.
-typedef gtsam::Pose2 rosam_point_t;
+typedef gtsam::Pose2 rosam_point_t;/**
+
+ * We define the rosam_polygon_t data type
+ * as a vector of gtsam::Pose2. Right now
+ * is implemented in this way on the code.
+ * If some day this change, we should change
+ * only this definition
+ */
+#include <vector>
+typedef std::vector<rosam_point_t> rosam_polygon_t;
 
 namespace gtl = boost::polygon;
 using namespace boost::polygon::operators;
