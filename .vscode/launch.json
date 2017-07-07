@@ -6,7 +6,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Debug/boost_polygon_traits",
+            "program": "${workspaceRoot}/build/boost_polygon_traits",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceRoot}",
