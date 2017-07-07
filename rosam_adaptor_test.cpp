@@ -118,6 +118,13 @@ void test_polygon_set() {
   assign(ps3, ps * ps2);
   PolygonSet ps4;
   ps4 += ps + ps2;
+
+  // Let's print this polygon to se what it has
+  // ps += 5;
+  std::cout << "ps  = " << std::endl << ps  << std::endl;
+  std::cout << "ps2 = " << std::endl << ps2 << std::endl;
+  std::cout << "ps3 = " << std::endl << ps3 << std::endl;
+  std::cout << "ps4 = " << std::endl << ps4 << std::endl;
   assert(area(ps4) == area(ps) + area(ps2) - area(ps3));
   assert(equivalence((ps + ps2) - (ps * ps2), ps ^ ps2));
   rectangle_data<double> rect;
