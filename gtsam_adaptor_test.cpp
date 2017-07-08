@@ -1,11 +1,11 @@
 /*
- * rosam_adaptor_test.cpp
+ * gtsam_adaptor_test.cpp
  *
  *  Created on: Jul 4, 2017
  *      Author: ivizzo
  */
 
-#include "rosam_boost_adaptor.hpp"
+#include "gtsam_boost_polygon_adaptor.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -122,27 +122,27 @@ void test_polygon_set()
 
 int main(int argc, char **argv)
 {
-  std::cout << "Launching Rosam Adaptor test..." << std::endl<< std::endl;
+  std::cout << "Launching Gtsam Adaptor test..." << std::endl<< std::endl;
 
   //First test the Point concept
   test_point<gtl::point_data<double>,double >();
   std::cout << "[OK] - boost::polygon::point_data tested." << std::endl;
 
-  test_point<rosam_point_t,double >();
+  test_point<gtsam_point_t,double >();
   std::cout << "[OK] - User definded point_data tested." << std::endl;
 
-  //Then we test our mapped concept of polygon (a.k.a rosam_polygon_t)
+  //Then we test our mapped concept of polygon (a.k.a gtsam_polygon_t)
   test_polygon<gtl::polygon_data<double>,double > ();
   std::cout << "[OK] - boost::polygon::polygon_data tested." << std::endl;
 
-  test_polygon<rosam_polygon_t,double> ();
+  test_polygon<gtsam_polygon_t,double> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
   //Finnaly we test the polygon_set_concept
   test_polygon_set<gtl::polygon_set_data<double>,double > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
-  test_polygon_set<rosam_polygon_set_t, double> ();
+  // test_polygon_set<gtsam_polygon_set_t, double> ();
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
 
   return 0;

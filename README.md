@@ -1,4 +1,4 @@
-## rosam_boost_polygon_adaptor
+## gtsam_boost_polygon_adaptor
 
 This is a single module to map a polygon based on gtsam::Pose2 concept into the boost.polygon library.
 ## Dependencies
@@ -64,8 +64,8 @@ $ sudo make install
 
 ## Build the adaptor and run the unit test
 ```sh
-$ git clone https://github.com/IgnacioVizz0/rosam_boost_polygon_adaptor.git
-$ cd rosam_boost_polygon_adaptor/build
+$ git clone https://github.com/IgnacioVizz0/gtsam_boost_polygon_adaptor
+$ cd gtsam_boost_polygon_adaptor/build
 $ make all
 $ ./boost_polygon_traits # this run the unit test
 ```

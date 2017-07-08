@@ -1,12 +1,12 @@
 /*
- * rosam_boost_adaptor.hpp
+ * gtsam_boost_polygon_adaptor.hpp
  *
  *  Created on: Jul 4, 2017
  *      Author: ivizzo
  */
 
-#ifndef ROSAM_BOOST_ADAPTOR_HPP_
-#define ROSAM_BOOST_ADAPTOR_HPP_
+#ifndef GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
+#define GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
 
 #include <boost/polygon/polygon.hpp>
 #include <gtsam/geometry/Pose2.h>
@@ -17,11 +17,11 @@ using namespace boost::polygon::operators;
 /**
  * @brief This adaptor is intended to teach
  * the boost.polygon library how to deal with
- * the rosam polygons.
+ * the gtsam polygons.
  *
  * Including this module in your program you will
  * be able to use the methods of the boost.polygon
- * library with the rosam polygons.
+ * library with the gtsam polygons.
  *
  * As a standard adaptor we need to include the template
  * library and the  "user" library where the polygon are
@@ -36,16 +36,16 @@ using namespace boost::polygon::operators;
  */
 /// \todo re-define if we really want to do this in this way
 /// of we want to specify the gtsam::Point2 as the point concept.
-typedef gtsam::Pose2 rosam_point_t;
+typedef gtsam::Pose2 gtsam_point_t;
 
 /**
- * We define the rosam_polygon_t data type
+ * We define the gtsam_polygon_t data type
  * as a vector of gtsam::Pose2. Right now
  * is implemented in this way on the code.
  * If some day this change, we should change
  * only this definition
  */
-typedef std::vector<rosam_point_t> rosam_polygon_t;
+typedef std::vector<gtsam_point_t> gtsam_polygon_t;
 
 /**
  *  ostream operator overloads to support debugging
@@ -91,11 +91,11 @@ namespace boost
   }
 }
 
-typedef std::vector<rosam_polygon_t> rosam_polygon_set_t;
+typedef std::vector<gtsam_polygon_t> gtsam_polygon_set_t;
 std::ostream &
-operator<<(std::ostream &o, const rosam_polygon_set_t &r)
+operator<<(std::ostream &o, const gtsam_polygon_set_t &r)
 {
-  o << "rosam_polygon_set_t = [ " << std::endl;
+  o << "gtsam_polygon_set_t = [ " << std::endl;
   for (unsigned int i = 0; i < r.size(); i++)
     for (unsigned int j = 0; j < r[i].size(); j++)
       std::cout << r[i][j].x() << "," << r[i][j].y() << ";" << std::endl;
@@ -112,18 +112,18 @@ namespace boost
   namespace polygon
   {
     template<>
-      struct geometry_concept<rosam_point_t>
+      struct geometry_concept<gtsam_point_t>
       {
         typedef point_concept type;
       };
 
     template<>
-      struct point_traits<rosam_point_t>
+      struct point_traits<gtsam_point_t>
       {
         typedef double coordinate_type;
 
         static inline coordinate_type
-        get (const rosam_point_t &point, orientation_2d orient)
+        get (const gtsam_point_t &point, orientation_2d orient)
         {
           if (orient == HORIZONTAL)
             return point.x ();
@@ -134,7 +134,7 @@ namespace boost
 
 // ToDo : check if the set method is working
     template<>
-      struct point_mutable_traits<rosam_point_t>
+      struct point_mutable_traits<gtsam_point_t>
       {
         typedef double coordinate_type;
 
@@ -144,18 +144,18 @@ namespace boost
         ///  forgot.We are using data from the same place in memmory
         ///  to re-create it and putting it again on the same place(?)
         static inline void
-        set(rosam_point_t &point, orientation_2d orient, coordinate_type value)
+        set(gtsam_point_t &point, orientation_2d orient, coordinate_type value)
         {
           if (orient == HORIZONTAL)
           {
-            point = rosam_point_t(value, point.y(), point.theta());
+            point = gtsam_point_t(value, point.y(), point.theta());
           }
           else
           {
-            point = rosam_point_t(point.x(), value, point.theta());
+            point = gtsam_point_t(point.x(), value, point.theta());
           }
         }
-        static inline rosam_point_t
+        static inline gtsam_point_t
         construct(coordinate_type x, coordinate_type y)
         {
           // we put 0 because if we will be
@@ -165,7 +165,7 @@ namespace boost
           // we are using this constructor, is because
           // we are building a polygon to use
           // with the library.
-          return rosam_point_t(x, y, 0.0);
+          return gtsam_point_t(x, y, 0.0);
         }
       };
   } // polygon
@@ -180,56 +180,56 @@ namespace boost
 {
   namespace polygon
   {
-    //first register rosam_polygon_t as a polygon_concept type
+    //first register gtsam_polygon_t as a polygon_concept type
     template <>
-    struct geometry_concept<rosam_polygon_t>
+    struct geometry_concept<gtsam_polygon_t>
     {
       typedef polygon_concept type;
     };
 
     template <>
-    struct polygon_traits<rosam_polygon_t>
+    struct polygon_traits<gtsam_polygon_t>
     {
       typedef double coordinate_type;
-      typedef rosam_polygon_t::const_iterator iterator_type;
-      typedef rosam_point_t point_type;
+      typedef gtsam_polygon_t::const_iterator iterator_type;
+      typedef gtsam_point_t point_type;
 
       // Get the begin iterator
       static inline iterator_type
-      begin_points(const rosam_polygon_t &t)
+      begin_points(const gtsam_polygon_t &t)
       {
         return t.begin();
       }
 
       // Get the end iterator
       static inline iterator_type
-      end_points(const rosam_polygon_t &t)
+      end_points(const gtsam_polygon_t &t)
       {
         return t.end();
       }
 
       // Get the number of sides of the polygon
       static inline std::size_t
-      size(const rosam_polygon_t &t)
+      size(const gtsam_polygon_t &t)
       {
         return t.size();
       }
 
       // Get the winding direction of the polygon
       static inline winding_direction
-      winding(const rosam_polygon_t &t)
+      winding(const gtsam_polygon_t &t)
       {
         return unknown_winding;
       }
     };
 
     template <>
-    struct polygon_mutable_traits<rosam_polygon_t>
+    struct polygon_mutable_traits<gtsam_polygon_t>
     {
       //expects stl style iterators
       template <typename iT>
-      static inline rosam_polygon_t &
-      set_points(rosam_polygon_t &t, iT input_begin, iT input_end)
+      static inline gtsam_polygon_t &
+      set_points(gtsam_polygon_t &t, iT input_begin, iT input_end)
       {
         t.clear();
         t.insert(t.end(), input_begin, input_end);
@@ -238,4 +238,4 @@ namespace boost
     };
   }
 }
-#endif /* ROSAM_BOOST_ADAPTOR_HPP_ */
+#endif /* GTSAM_BOOST_POLYGON_ADAPTOR_HPP_ */
