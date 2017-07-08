@@ -64,7 +64,7 @@ $ sudo make install
 
 ## Build the adaptor and run the unit test
 ```sh
-$ git clone ssh://git@git.wardrobe.irobot.com:7999/~ivizzo/gtsam_boost_polygon_adaptor.git
+$ git clone
 $ cd gtsam_boost_polygon_adaptor/build
 $ make all
 $ ./boost_polygon_traits # this run the unit test
