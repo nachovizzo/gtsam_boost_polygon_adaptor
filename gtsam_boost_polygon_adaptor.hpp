@@ -1,19 +1,10 @@
-/*
+/* ----------------------------------------------------------------------------
  * gtsam_boost_polygon_adaptor.hpp
- *
+
  *  Created on: Jul 4, 2017
  *      Author: ivizzo
- */
+ * -------------------------------------------------------------------------- */
 
-#ifndef GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
-#define GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
-
-#include <boost/polygon/polygon.hpp>
-#include <gtsam/geometry/Pose2.h>
-#include <vector>
-#include <iostream>
-namespace gtl = boost::polygon;
-using namespace boost::polygon::operators;
 /**
  * @brief This adaptor is intended to teach
  * the boost.polygon library how to deal with
@@ -27,6 +18,17 @@ using namespace boost::polygon::operators;
  * library and the  "user" library where the polygon are
  * defined as well
  */
+
+#ifndef GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
+#define GTSAM_BOOST_POLYGON_ADAPTOR_HPP_
+
+#include <boost/polygon/polygon.hpp>
+#include <gtsam/geometry/Pose2.h>
+#include <vector>
+#include <iostream>
+namespace gtl = boost::polygon;
+using namespace boost::polygon::operators;
+
 
 /**
  * We use a vector of Pose2, because we are interested
@@ -46,6 +48,19 @@ typedef gtsam::Pose2 gtsam_point_t;
  * only this definition
  */
 typedef std::vector<gtsam_point_t> gtsam_polygon_t;
+
+/**
+ * We define the gtsam_polygon_set_t data type
+ * as a vector of gtsam_polygon_t. Right now
+ * is implemented in this way on the code.
+ * If some day this change, we should change
+ * only this definition.
+ * I'm still not quite sure why we need to
+ * use set of polygons in order to take advantage
+ * of all of the methods implemented in the
+ * library.
+ */
+typedef std::vector<gtsam_polygon_t> gtsam_polygon_set_t;
 
 /**
  *  ostream operator overloads to support debugging
@@ -91,7 +106,6 @@ namespace boost
   }
 }
 
-typedef std::vector<gtsam_polygon_t> gtsam_polygon_set_t;
 std::ostream &
 operator<<(std::ostream &o, const gtsam_polygon_set_t &r)
 {
