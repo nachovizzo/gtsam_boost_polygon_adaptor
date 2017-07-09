@@ -142,7 +142,7 @@ int main(int argc, char **argv)
   test_polygon_set<gtl::polygon_set_data<double>,double > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
 
-  // test_polygon_set<gtsam_polygon_set_t, double> ();
+  test_polygon_set<gtsam_polygon_set_t, double> ();
   std::cout << "[OK] - User definded poygon_set_data tested." << std::endl;
 
   return 0;
