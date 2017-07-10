@@ -64,7 +64,7 @@ using namespace boost::polygon::operators;
  * point_data
  */
 // #define USE_GTSAM_POINT_CONCEPT
-// #define USE_GTSAM_POSE_CONCEPT
+#define USE_GTSAM_POSE_CONCEPT
 // #define USE_SIMPLE_POINT_CONCEPT
 
 #ifdef USE_SIMPLE_POINT_CONCEPT
@@ -346,7 +346,12 @@ namespace boost
       set_points(gtsam_polygon_t &t, iT input_begin, iT input_end)
       {
         t.clear();
-        t.insert(t.end(), input_begin, input_end);
+        while (input_begin != input_end)
+        {
+          t.push_back(gtsam_point_t());
+          gtl::assign(t.back(), *input_begin);
+          ++input_begin;
+        }
         return t;
       }
     };
