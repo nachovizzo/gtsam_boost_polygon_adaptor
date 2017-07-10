@@ -124,6 +124,17 @@ int main(int argc, char **argv)
 {
   std::cout << "Launching Gtsam Adaptor test..." << std::endl<< std::endl;
 
+   /**
+    * Now we will test our 3 layers of concpet refinament. First the Point,
+    * Then the Polygon, and then the Polygon_set.
+    * The tests are designed to fail during run time, so if something is
+    * wrong you should catch it while running the test. Of course that if
+    * something is wrong with the point, then it's pointless to try to run
+    * the polygon_test, so we abort, and so on.
+    *
+   /
+
+  /* ------------------------ POINT DATA TEST -------------------------------*/
   //First test the Point concept
   test_point<gtl::point_data<double>,double >();
   std::cout << "[OK] - boost::polygon::point_data tested." << std::endl;
@@ -131,6 +142,7 @@ int main(int argc, char **argv)
   test_point<gtsam_point_t,double >();
   std::cout << "[OK] - User definded point_data tested." << std::endl;
 
+  /* ------------------------ POLYGON DATA TEST -----------------------------*/
   //Then we test our mapped concept of polygon (a.k.a gtsam_polygon_t)
   test_polygon<gtl::polygon_data<double>,double > ();
   std::cout << "[OK] - boost::polygon::polygon_data tested." << std::endl;
@@ -138,6 +150,7 @@ int main(int argc, char **argv)
   test_polygon<gtsam_polygon_t,double> ();
   std::cout << "[OK] - User defined polygon tested." << std::endl;
 
+  /* ---------------------- POLYGON SET DATA TEST ---------------------------*/
   //Finnaly we test the polygon_set_concept
   test_polygon_set<gtl::polygon_set_data<double>,double > ();
   std::cout << "[OK] - Boost::polygon poygon_set_data tested." << std::endl;
