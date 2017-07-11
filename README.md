@@ -54,7 +54,7 @@ $ vi gtsam-3.2.1/gtsam/base/FastSet.h and add #include<boost/serialization/seria
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/serialization/nvp.hpp>
-#include <boost/serialization/serialization.hpp> <----------------------
+#include <boost/serialization/serialization.hpp> //<----------------------
 #include <boost/serialization/set.hpp>
 ```
 ```sh
@@ -62,10 +62,57 @@ $ make check #(optional, runs unit tests)
 $ sudo make install
 ```
 
-## Build the adaptor and run the unit test
+## Usage
+There is a simple example(example.cpp) in the root directory in order
+to learn how to use the adaptor. Basically it consist in 4 simple steps :
+ 1. Include the adapter module
+    ```cpp
+    #include "gtsam_boost_polygon_adaptor.hpp"
+    ```
+ 2. Write a simple test function
+    ```cpp
+    void test(void){
+        // declare your polygon, with your custom data type
+        gtsam_polygon_set_t my_polygon;
+
+        // fill your polygon with some random object, like a rectangle
+        my_polygon += boost::polygon::rectangle_data<double>(0, 0, 10, 10);
+
+        // do some crazy magic thing, like bloat and shrink the polygon
+        gtsam_polygon_set_t my_deflated_polygon, my_inflated_polygon;
+        my_deflated_polygon += (my_polygon - 1); //deflates the polygon by 1
+        my_inflated_polygon += (my_polygon + 1); //inflates the polygon by 1
+
+        // output your results to the std output.
+        std::cout << "My polygon is = " << my_polygon << std::endl
+                << "My deflated polygon is = " << my_deflated_polygon << std::endl
+                << "My inflated polygon is = " << my_inflated_polygon << std::endl;
+
+        // have fun
+        std::cout << "Now use this module to do your job!"  << std::endl ;
+    }
+    ```
+ 3. Write main function to test it
+    ```cpp
+    int main(int argc, char **argv){
+
+        // call your test function
+        test();
+
+        //say goodbye
+        return 0;
+    }
+    ```
+ 4. Build and run your test module:
+    ```sh
+    $ g++ -std=c++11 example.cpp -lboost_system -lgtsam -o example
+    $ ./example #runs the example
+    ```
+
+## Build the adapter unit test
 ```sh
 $ git clone
 $ cd gtsam_boost_polygon_adaptor/build
 $ make all
-$ ./boost_polygon_traits # this run the unit test
+$ ./gtsam_boost_polygon_adaptor_test # this runs the unit test
 ```
