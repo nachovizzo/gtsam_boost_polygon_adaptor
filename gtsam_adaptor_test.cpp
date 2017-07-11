@@ -123,21 +123,6 @@ void test_polygon_set()
 int main(int argc, char **argv)
 {
   std::cout << "Launching Gtsam Adaptor test..." << std::endl<< std::endl;
-  std::cout << "[INFO] We are using  { " <<
-  #ifdef USE_GTSAM_POINT_CONCEPT
-      "gtsam::Point2"
-  #else
-    #ifdef USE_GTSAM_POSE_CONCEPT
-        "gtsam::Pose2"
-    #else
-      #ifdef USE_SIMPLE_POINT_CONCEPT
-        "SimplePoint"
-      #else
-        "gtl::point_data<double>"
-      #endif
-    #endif
-  #endif
-   << " } as point_data concept" << std::endl;
 
    /**
     * Now we will test our 3 layers of concpet refinament. First the Point,
@@ -147,7 +132,7 @@ int main(int argc, char **argv)
     * something is wrong with the point, then it's pointless to try to run
     * the polygon_test, so we abort, and so on.
     *
-   /
+   */
 
   /* ------------------------ POINT DATA TEST -------------------------------*/
   //First test the Point concept

@@ -30,66 +30,6 @@ namespace gtl = boost::polygon;
 using namespace boost::polygon::operators;
 
 /**
- * This declarations will be used only for
- * testing purposes and in order to solve the
- * compilation error.
- * Once the compilation error is solved we
- * should clean the code and go back to
- * use gtsam::Pose2.
- *
- * @brief If we try to map the gtsam_polygon_set
- * concept to a booost::polygon::polygon_set concept
- * we will get a compilation error. We don't have
- * a solution for this yet.
- * The error is :
- *  error: no match for ‘operator=’
- *  (operand types are ‘gtsam::Point2’ and
- *  ‘const boost::polygon::point_data<double>’)
- *  in /usr/include/c++/7/bits/stl_algobase.h:294:16:
- *  *__result = *__first;
- *  ~~~~~~~~~~^~~~~~~~~~
- *
- * This seems to indicate that the Point concept is
- * not mapped properly.
- *
- * Because is easier to debug and to go back and
- * forward beetween gtsam::Poin2 and point_data<double>
- * we will use that data types until we solve this issue.
- * Once we solve this we should be able to fast forward
- * to use gtsam::Pose2 data type.
- *
- * Use : comment or or uncomment the next lines
- * if both are commented the default value for
- * the concept type will be the boost::polygon
- * point_data
- */
-// #define USE_GTSAM_POINT_CONCEPT
-#define USE_GTSAM_POSE_CONCEPT
-// #define USE_SIMPLE_POINT_CONCEPT
-
-#ifdef USE_SIMPLE_POINT_CONCEPT
-  struct SimplePoint
-  {
-    double x;
-    double y;
-  };
- /**
-  * Now we need to do some ugly black magic
-  * in order to make everhing compiles.
-  * Because set and get methods for this
-  * simple structure are different that the
-  * ones implemented in gtsam. So, I will
-  * try to make this KISS, but don't expect
-  * to much beacuse it will be a mess
-  */
-  #define _x x
-  #define _y y
-#else
-  #define _x x()
-  #define _y y()
-#endif
-
-/**
  * We use a vector of Pose2, because we are interested
  * in keep the heading information. But for the geometry
  * purposes we only need the Translation information
@@ -97,21 +37,7 @@ using namespace boost::polygon::operators;
  */
 /// \todo re-define if we really want to do this in this way
 /// of we want to specify the gtsam::Point2 as the point concept.
-typedef
-#ifdef USE_GTSAM_POINT_CONCEPT
-    gtsam::Point2
-#else
-  #ifdef USE_GTSAM_POSE_CONCEPT
-      gtsam::Pose2
-  #else
-    #ifdef USE_SIMPLE_POINT_CONCEPT
-      SimplePoint
-    #else
-      gtl::point_data<double>
-    #endif
-  #endif
-#endif
-        gtsam_point_t;
+typedef gtsam::Pose2 gtsam_point_t;
 
 /**
  * We define the gtsam_polygon_t data type
@@ -185,7 +111,7 @@ operator<<(std::ostream &o, const gtsam_polygon_set_t &r)
   o << "gtsam_polygon_set_t = [ " << std::endl;
   for (unsigned int i = 0; i < r.size(); i++)
     for (unsigned int j = 0; j < r[i].size(); j++)
-      std::cout << r[i][j]._x << "," << r[i][j]._y << ";" << std::endl;
+      std::cout << r[i][j].x() << "," << r[i][j].y() << ";" << std::endl;
   o << "]; ";
   return o;
 }
@@ -213,9 +139,9 @@ namespace boost
         get (const gtsam_point_t &point, orientation_2d orient)
         {
           if (orient == HORIZONTAL)
-            return point._x;
+            return point.x();
           else
-            return point._y;
+            return point.y();
         }
       };
 
@@ -235,27 +161,11 @@ namespace boost
         {
           if (orient == HORIZONTAL)
           {
-            #ifndef USE_SIMPLE_POINT_CONCEPT
-              #ifdef USE_GTSAM_POSE_CONCEPT
-                point = gtsam_point_t(value, point.y(), point.theta());
-              #else
-                point = gtsam_point_t(value, point.y());
-              #endif
-            #else
-                point._x = value;
-            #endif
+            point = gtsam_point_t(value, point.y(), point.theta());
           }
           else
           {
-            #ifndef USE_SIMPLE_POINT_CONCEPT
-              #ifdef USE_GTSAM_POSE_CONCEPT
-                point = gtsam_point_t(point.x(), value, point.theta());
-              #else
-                point = gtsam_point_t(point.x(), value);
-              #endif
-            #else
-                point._y = value;
-            #endif
+            point = gtsam_point_t(point.x(), value, point.theta());
           }
         }
         static inline gtsam_point_t
@@ -268,18 +178,7 @@ namespace boost
           // we are using this constructor, is because
           // we are building a polygon to use
           // with the library.
-          #ifndef USE_SIMPLE_POINT_CONCEPT
-            #ifdef USE_GTSAM_POSE_CONCEPT
-              return gtsam_point_t(x, y, 0.0);
-            #else
-              return gtsam_point_t(x, y);
-            #endif
-          #else
-              gtsam_point_t retval;
-              retval._x = x;
-              retval._y = y;
-              return retval;
-          #endif
+          return gtsam_point_t(x, y, 0.0);
         }
       };
   } // polygon
