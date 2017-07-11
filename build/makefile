@@ -37,19 +37,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables
 
 # All Target
-all: clean boost_polygon_traits
+all: clean gtsam_boost_polygon_adaptor_test
 
 # Tool invocations
-boost_polygon_traits: $(OBJS) $(USER_OBJS)
+gtsam_boost_polygon_adaptor_test: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "boost_polygon_traits" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "gtsam_boost_polygon_adaptor_test" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) boost_polygon_traits
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS)$(C_DEPS) gtsam_boost_polygon_adaptor_test
 	-@echo ' '
 
 .PHONY: all clean dependents
