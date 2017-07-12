@@ -109,6 +109,34 @@ to learn how to use the adaptor. Basically it consist in 4 simple steps :
     $ ./example #runs the example
     ```
 
+## Double to int conversions
+In order to use the *boost::polygon* methods, we need to use integer type coordinates(see :
+[Coordinate Concept](http://www.boost.org/doc/libs/1_62_0/libs/polygon/doc/gtl_coordinate_concept.htm)):
+
+> "In general a data type should define std::numeric_limits and be integer-like.
+> **Floating point coordinate types are not supported by all the algorithms** and generally
+> not suitable for use with the library at present."
+
+So, I wrote a simple example in order to help you with how you should work with doubles and integers.
+
+ 1. Install xclip(If you don't have it yet) will be useful in the future as well
+ ```sh
+ $ sudo apt install xlcip
+```
+2. Do everything in one step! (build&run&copy)
+```sh
+ g++ -std=c++11 double_2_int_conversion_example.cpp -lboost_system -lgtsam -o example && ./example |  xclip -selection clipboard #FANCY!
+```
+3. Open GNU/Octave for example, paste the results you already have in your clipboard and plot!
+
+    Doubles:
+
+    ![Integer](https://preview.ibb.co/joxYNv/double.png)
+
+    Integers:
+
+    ![Double](https://preview.ibb.co/dn0g9a/double.png)
+
 ## Build the adapter unit test
 ```sh
 $ git clone
