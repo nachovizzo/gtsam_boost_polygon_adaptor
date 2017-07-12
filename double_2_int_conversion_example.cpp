@@ -23,6 +23,28 @@
 // We will use this macro to convert from double to int
 #define SCALE_FACTOR(X) 1e##X
 
+// This crazy macro is only for making things easy to you,
+// copy paste the output of the console, run it with MATLAB/GNU Octave
+#define MATBLAB_MACRO       \
+        "% plots \n"        \
+        "x = a(:,1); \n"    \
+        "y = a(:,2); \n"    \
+        "figure() \n"       \
+        "grid() \n"         \
+        "plot(x,y,'b'); \n" \
+        "hold() \n"         \
+        " \n"               \
+        "x = b(:,1); \n"    \
+        "y = b(:,2); \n"    \
+        " \n"               \
+        "plot(x,y,'r'); \n" \
+        "hold() \n"         \
+        " \n"               \
+        "x = c(:,1); \n"    \
+        "y = c(:,2); \n"    \
+        "hold() \n"         \
+        "plot(x,y,'g'); \n" \
+
 void test(void){
     // declare your polygon, with your custom data type
     gtsam_polygon_set_t my_polygon;
@@ -50,6 +72,8 @@ void test(void){
               << "b" << my_deflated_polygon << std::endl
               << "c" << my_inflated_polygon << std::endl;
 
+    std::cout << MATBLAB_MACRO << std::endl ;
+
     // now that you have your deflated/inflated polygons you should back to doubles
     my_polygon          = gtl::scale_down(my_polygon, 100) ;
     my_deflated_polygon = gtl::scale_down(my_deflated_polygon, 100) ;
@@ -59,6 +83,8 @@ void test(void){
     std::cout << "a" << my_polygon          << std::endl
               << "b" << my_deflated_polygon << std::endl
               << "c" << my_inflated_polygon << std::endl;
+
+    std::cout << MATBLAB_MACRO << std::endl ;
 }
 
 int main(int argc, char **argv){
