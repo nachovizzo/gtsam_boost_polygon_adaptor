@@ -122,18 +122,19 @@ So, I wrote a simple example in order to help you with how you should work with 
  1. Install xclip(If you don't have it yet) will be useful in the future as well
  ```sh
  $ sudo apt install xlcip
-```
+ ```
 2. Do everything in one step! (build&run&copy)
 ```sh
- g++ -std=c++11 double_2_int_conversion_example.cpp -lboost_system -lgtsam -o example && ./example |  xclip -selection clipboard #FANCY!
+$ g++ -std=c++11 double_2_int_conversion_example.cpp -lboost_system -lgtsam -o example && \
+  ./example |  xclip -selection clipboard #FANCY!
 ```
 3. Open GNU/Octave for example, paste the results you already have in your clipboard and plot!
 
-    Doubles:
+    Integers:
 
     ![Integer](https://preview.ibb.co/joxYNv/double.png)
 
-    Integers:
+    Doubles:
 
     ![Double](https://preview.ibb.co/dn0g9a/double.png)
 
