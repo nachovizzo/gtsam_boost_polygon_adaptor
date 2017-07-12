@@ -108,7 +108,7 @@ namespace boost
 std::ostream &
 operator<<(std::ostream &o, const gtsam_polygon_set_t &r)
 {
-  o << "gtsam_polygon_set_t = [ " << std::endl;
+  o << " = [ " << std::endl;
   for (unsigned int i = 0; i < r.size(); i++)
     for (unsigned int j = 0; j < r[i].size(); j++)
       std::cout << r[i][j].x() << "," << r[i][j].y() << ";" << std::endl;
